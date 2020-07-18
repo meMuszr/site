@@ -1,0 +1,13 @@
+{
+  "name": "personal-site",
+  "version": "0.1.0",
+  "description": "Personal site for Mustafa Abdul-Kader",
+  "main": "index.js",
+  "repository": "git@github.com:meMuszr/site.git",
+  "author": "Mustafa Abdul-Kader <mustafa@muszr.me>",
+  "license": "GPL-3.0",
+  "private": true,
+  "devDependencies": {
+    "firebase-tools": "^8.6.0"
+  }
+}
