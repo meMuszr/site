@@ -1,26 +1,40 @@
----
 version: 2.1
+orbs:
+  firebase-deploy: azdevs/firebase-deploy@1.0.0
+  hugo: circleci/hugo@0.6.0
 jobs:
   build:
-    docker:
-      - image: circleci/node:latest
-    working_directory: ~/personal-site
+    executor:
+      name: hugo/cibuilds
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - yarn-{{ checksum "yarn.lock" }}
-            - yarn-
       - run:
-          name: Install Dependencies
-          command: yarn install
-      - save_cache:
-          key: yarn-{{ checksum "yarn.lock" }}
+          name: pull theme down
+          command: |
+            git submodule init
+            git submodule update
+      - hugo/install:
+          version: 0.74.3
+      - hugo/hugo-build
+      - persist_to_workspace:
+          root: ~/project
           paths:
-            - ./node_modules
-      - run:
-          name: Site Build
-          command: hugo --minify
-      - run:
-          name: Firebase Deploy
-          command: ./node_modules/.bin/firebase deploy --token $FIREBASE_TOKEN
+            - public
+            - resources
+  deploy:
+    docker:
+      - image: 'circleci/node:lts'
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - firebase-deploy/deploy:
+          token: $FIREBASE_TOKEN
+workflows:
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+
