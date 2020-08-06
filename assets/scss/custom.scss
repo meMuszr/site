@@ -1,0 +1,58 @@
+#header {
+  height: 2rem;
+  overflow: hidden;
+  align-items: stretch;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+}
+#header + h2 {
+  text-align: justify;
+}
+@media (-moz-touch-enabled: 0), (hover: hover), (pointer: fine) {
+  #header:hover {
+    display: block;
+  }
+
+  #header:hover > #first-header {
+    float: right;
+    display: hidden;
+    animation: fadeOut 0.75s linear;
+    animation-fill-mode: forwards;
+  }
+  #header:hover > #second-header {
+    display: block;
+    position: absolute;
+    float: left;
+    animation: fadeIn 1s linear;
+    animation-fill-mode: forwards;
+  }
+}
+#first-header {
+  display: block;
+}
+#second-header {
+  display: none;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-20rem);
+    opacity: 0;
+  } 
+}
+@keyframes fadeIn {
+  0% 
+  {
+    opacity: 0;
+    transform: translateX(20rem);
+  }
+  100% {
+    opacity: 1;
+    transform:translateX(0rem);
+
+  } 
+}

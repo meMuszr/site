@@ -20,7 +20,7 @@ jobs:
             - ./node_modules
       - run:
           name: Site Build
-          command: npm run build
+          command: hugo --minify
       - run:
           name: Firebase Deploy
-          command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+          command: ./node_modules/.bin/firebase deploy --token $FIREBASE_TOKEN
